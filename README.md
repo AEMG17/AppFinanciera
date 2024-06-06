@@ -1,4 +1,4 @@
-# Personal Finances App
+# App Financiera
 
 * Aplicación desarrollada en Vue 3, con TypeScript y TailwindCSS, consume una API Externa (https://github.com/AEMG17/API-AppFinanciera), tiene soporte para compilación en plataformas moviles mediante la libreria de *Capacitor*.
 
