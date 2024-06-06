@@ -4,7 +4,6 @@ import { instance } from '../libs/axios';
 import { getToken } from '../libs/auth';
 import { Transaction } from '../interfaces/transaction';
 
-// Arreglos de tipo transaction
 const incomes = ref<Transaction[]>([])
 const bills = ref<Transaction[]>([])
 const transactions = ref<Transaction[]>([])
@@ -19,13 +18,12 @@ const fetchIncomes = async () => {
   try {
     const token = getToken();
 
-    // Se realiza llamada a la API.
     const { data } = await instance.get('/finances/incomes', { headers: { 'x-access-token': token } });
     incomes.value = data;
 
     incomes.value.forEach((income) => {
       totalIncome.value += income.amount;
-    }); // Se suma cada valor al total de ingresos.
+    });
 
 
   } catch (error) {
@@ -37,14 +35,13 @@ const fetchBills = async () => {
   try {
     const token = getToken();
 
-    // Se realiza llamada a la API.
     const { data } = await instance.get('/finances/bills', { headers: { 'x-access-token': token } });
     bills.value = data;
 
 
     bills.value.forEach((bill) => {
       totalBill.value -= bill.amount;
-    }); // Se resta cada valor al total de gastos.
+    });
 
   } catch (error) {
     console.log(error);
@@ -55,7 +52,6 @@ const deleteRow = async (type: string, id: number) => {
   try {
     const token = getToken();
 
-    // Se realiza llamada a la API.
     await instance.delete('/finances/'+type+'/'+ id, { headers: { 'x-access-token': token } });
     
 
@@ -75,29 +71,22 @@ const deleteRow = async (type: string, id: number) => {
 }
 
 const orderTransactions = async () => {
-  // El arreglo anteriormente guardado procedemos a mapearlo y agregar un nuevo atributo, a los objetos ya añadidos.
-  // en este caso al arreglo de ingresos, a cada objeto le añadimos la propiedad de type que almacena un string
-  // este string permite diferenciar si es income o bill, ya que ambos guardan los mismos atributos.
   const incomeList = incomes.value.map((income: Transaction) => ({ ...income, type: 'incomes' }));
   const billList = bills.value.map((bill: Transaction) => ({ ...bill, type: 'bills' }));
 
-  // Finalmente se comninan estos arreglos, y se ordenan por fecha, para asi poder ver cuales han sido los ultimos en añadirse.
   const combined = [...incomeList, ...billList].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  transactions.value = combined; // Se almacena el combinado.
-  totalSummary.value = totalBill.value + totalIncome.value; // Se suma los totales y se muestra si esta en negativo o positivo
+  transactions.value = combined;
+  totalSummary.value = totalBill.value + totalIncome.value;
 }
 
 onMounted(async () => {
-  // Habilitamos loaders/spinners
   dataFetched.value = false;
 
-  // Realizamos llamadas a la API y calculos matematicos.
   await fetchIncomes();
   await fetchBills();
   await orderTransactions();
 
-  // Ocultamos loaders/spinners
   dataFetched.value = true;
 })
 </script>
@@ -110,7 +99,6 @@ onMounted(async () => {
         <div class="grid p-3 bg-zinc-800 gap-2 rounded-lg">
           <h1 class="font-bold text-lg text-emerald-500 uppercase">Ingresos</h1>
           
-          <!--Aqui si los datos no se han terminado de cargar, se emite un loader.-->
           <p class="text-green-600" v-if="dataFetched">${{ totalIncome }}</p>
           <div role='status mx-auto' v-if="!dataFetched">
             <svg xmlns='http://www.w3.org/2000/svg'
@@ -123,7 +111,6 @@ onMounted(async () => {
         <div class="grid p-3 bg-zinc-800 gap-2 rounded-lg">
           <h1 class="font-bold text-lg uppercase text-rose-700">GASTOS</h1>
           
-          <!--Aqui si los datos no se han terminado de cargar, se emite un loader.-->
           <p class="text-red-600" v-if="dataFetched">${{ totalBill }}</p>
           <div role='status mx-auto' v-if="!dataFetched">
             <svg xmlns='http://www.w3.org/2000/svg'
@@ -136,7 +123,6 @@ onMounted(async () => {
         <div class="grid p-3 bg-zinc-800 gap-2 rounded-lg col-span-2">
           <h1 class="font-bold text-xl uppercase text-orange-700">TOTAL</h1>
           
-          <!--Aqui si los datos no se han terminado de cargar, se emite un loader.-->
           <p class="text-yellow-600 text-lg font-bold" v-if="dataFetched">${{ totalSummary }}</p>
           <div role='status mx-auto' v-if="!dataFetched">
             <svg xmlns='http://www.w3.org/2000/svg'
@@ -154,7 +140,6 @@ onMounted(async () => {
 
       <div class="grid gap-3">
           
-          <!--Aqui si los datos no se han terminado de cargar, se emite un loader.-->
         <div className='flex justify-center items-center relative mt-24' v-if="!dataFetched">
           <div
             className='w-2 h-2 rounded-full bg-transparent absolute border border-solid border-yellow-500 animate-ping'>
@@ -168,7 +153,6 @@ onMounted(async () => {
         </div>
 
           
-          <!--Aqui se emite una directiva que va transaccion por transaccion y la lista en el DOM, revisa si el tipo es gasto o ingreso y en base a eso muestra una caja diferente.-->
         <div class="bg-zinc-800 grid gap-3 p-2 rounded-md" v-for="transaction in transactions" :key="transaction.title">
           <div class="grid grid-cols-2">
             <p class="font-bold text-lg"
@@ -193,7 +177,6 @@ onMounted(async () => {
 
     
           
-          <!--Boton para realizar nuevos movimientos.-->
     <RouterLink to="/transactions"
       class="absolute bottom-2 -right-3 bg-yellow-500 rounded-full p-4 hover:bg-orange-500 transition-all ease-in-out delay-100 drop-shadow-md">
       <img src="../assets/Calculator.svg" alt="Add new data" />

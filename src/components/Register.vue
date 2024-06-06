@@ -6,14 +6,13 @@ import axios from 'axios';
 import router from '../router/router';
 import event from '../libs/event';
 
-// Atributos de registro de usuario.
 const name = ref("");
 const email = ref("");
 const password = ref("");
 const errorMessage = ref("");
 
 const authRegister = async () => {
-    try {//Pregunta si estos tres atributos estan incompletos, si no lo estan envia la peticion.
+    try {
         if(name.value.trim() != "" && email.value.trim() != "" && password.value.trim() != ""){
             const {data} = await instance.post('/auth/users', {name: name.value, email: email.value, password: password.value});
             saveToken(data.token)

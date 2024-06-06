@@ -6,19 +6,16 @@ import { onMounted, ref } from 'vue';
 
 const logoutButton = ref(false);
 
-// Remueve el token, envia el evento log-in y envia a la pagina de login.
 const authLogout = () => {
   removeToken();
   event.emit('log-in', false);
   router.push('/login');
 }
 
-// Funcion que maneja el estado del boton de salir de sesión
 const handleButtonStatus = () => {
   logoutButton.value = !logoutButton.value;
 }
 
-// Al montar la aplicacion, escucha el evento log-in.
 onMounted(() => {
   event.on('log-in', handleButtonStatus);
   
@@ -30,11 +27,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <!--Header de la pagina-->
   <header class="w-full bg-yellow-500 p-4 flex justify-between items-center">
     <div class="inline-flex items-center gap-3">
       <img src="./assets/Wallet.svg" alt="Wallet Icon">
-      <h1 class="font-bold text-xl text-white">Finance App</h1>
+      <h1 class="font-bold text-xl text-white">App Financiera</h1>
     </div>
 
     <div class="flex items-center gap-3">
@@ -47,8 +43,6 @@ onMounted(() => {
       </button>
     </div>
   </header>
-  <!--Header de la pagina-->
 
-  <!--Vista del router-->
   <RouterView></RouterView>
 </template>

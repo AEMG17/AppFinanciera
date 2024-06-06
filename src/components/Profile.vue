@@ -10,7 +10,6 @@ const userInfo = ref<User>({name: 'Usuario', image: 'https://therichpost.com/wp-
 
 const handleNewImage = async (e: Event) => {
     imageData.value.delete('image');
-    /* @ts-ignore */
     imageData.value.append('image', e.target.files[0]);
     await updateImage();
 }

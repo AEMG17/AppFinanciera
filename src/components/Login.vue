@@ -11,12 +11,12 @@ const password = ref("");
 const errorMessage = ref("");
 
 const authSignin = async () => {
-    try {// Pregunta si email y password estan vacios, si no envia la peticion.
+    try {
         if(email.value.trim() != "" && password.value.trim() != ""){
             const {data} = await instance.post('/auth/signin', {email: email.value, password: password.value});
-            saveToken(data.token) // guarda el token
-            event.emit('log-in', true); // envia evento para el header.
-            router.push('/') // redirige al home.
+            saveToken(data.token)
+            event.emit('log-in', true);
+            router.push('/')
         }
     } catch (e) {
         if (axios.isAxiosError(e) && e.response) {
@@ -33,7 +33,7 @@ const authSignin = async () => {
 
         <div class="grid justify-center mx-auto gap-3">
             <img src="../assets/User.svg" alt="User Icon" class="mx-auto">
-            <h1 class="text-white font-bold text-xl">Inicia Sesion</h1>
+            <h1 class="text-white font-bold text-xl">Iniciar Sesion</h1>
         </div>
 
         <div class="w-full grid gap-6">
@@ -54,7 +54,7 @@ const authSignin = async () => {
 
             <button class="bg-yellow-500 rounded-lg p-4 text-white text-center font-bold" @click="authSignin">Ingresar</button>
         
-            <RouterLink to="/register" class="text-yellow-400 text-sm">No tengo una cuenta, quiero registrarme!</RouterLink>
+            <RouterLink to="/register" class="text-yellow-400 text-sm">¡No tengo una cuenta, quiero registrarme!</RouterLink>
         </div>
     </div>
 </template>
