@@ -1,0 +1,17 @@
+/* Declare font poppins */
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+* {
+  font-family: 'Poppins';
+}
+
+body {
+  background-color: #1f1f1f;
+}
