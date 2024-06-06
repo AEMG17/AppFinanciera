@@ -1,6 +1,6 @@
 # Personal Finances App
 
-* Aplicación desarrollada en Vue 3, con TypeScript y TailwindCSS, consume una API Externa (https://github.com/AEMG17/API-AppFinanciera), tiene soporte para compilación en plataformas moviles mediante la libreria de Capacitor.
+* Aplicación desarrollada en Vue 3, con TypeScript y TailwindCSS, consume una API Externa (https://github.com/AEMG17/API-AppFinanciera), tiene soporte para compilación en plataformas moviles mediante la libreria de *Capacitor*.
 
 ## Comandos
 
@@ -10,11 +10,11 @@
 
 `npm run dev` Comando para lanzar versión de desarrollo.
 
-*Una vez lanzada, aparece la versión de VITE en verde, así como 3 pestañas de información. Control + click sobre la url en **Local** para arrojar la aplicación.
+Una vez lanzada, nos muestra la versión de VITE en color verde, así como 3 pestañas de información. Control + click sobre la url en **Local** para arrojar la aplicación.
 
 ## Build  Android
 
-*Se utiliza Capacitor para compilar la aplicación haciendola descargable como APK en androids.*
+Se utiliza Capacitor para compilar la aplicación haciendola descargable como APK en androids.
 
 `npx cap add android` (Es necesario tener una dist creada previamente con Build).
 
